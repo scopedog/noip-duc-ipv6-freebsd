@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# PROVIDE: noip
+# REQUIRE: NETWORKING DAEMON curl
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# noip_enable (bool): Set to NO by default.
+#                     Set it to YES to enable noip.
+#
+
+. /etc/rc.subr
+
+name="noip_duc_ipv6"
+rcvar=noip_duc_ipv6_enable
+pidfile="/var/run/noip-duc-ipv6.pid"
+logfile="/var/log/noip-duc-ipv6.log"
+command="/usr/local/bin/noip-duc-ipv6.sh"
+start_cmd="/usr/sbin/daemon -P $pidfile -o $logfile $command"
+stop_cmd="stop"
+
+stop()
+{
+	if [ -f $pidfile ]; then
+		kill `cat $pidfile`
+	fi
+}
+
+load_rc_config $name
+
+: ${noip_enable="NO"}
+
+run_rc_command "$1"
