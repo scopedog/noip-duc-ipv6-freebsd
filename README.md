@@ -1,7 +1,7 @@
 # noip-duc-ipv6-freebsd
 Dynamic DNS Client (DUC) for NO-IP + IPv6 + FreeBSD
 
-Install curl if not installed yet.
+Install 'curl' if not installed yet.
 
 1. Set your `interface`, `user`, `pass`, `hostname` and `interval` values in no
 ip-duc-ipv6.sh.
