@@ -30,7 +30,7 @@ UpdateIP () {
         addr=`ifconfig $interface | awk '/inet6/ {if (substr($2, 1, 6) != "fe80::") {print $2; exit;}}'`
         #addr=''
 
-        # Check if there's a valid address
+        # Check if there's valid address
         if [ x$addr = x ]; then
             echo "No valid IPv6 address assigned to $interface, will try in 30sec"
             sleep 30
@@ -40,7 +40,7 @@ UpdateIP () {
     done
     #echo "$lastaddr -> $addr "
 
-    # Compare with a last address
+    # Compare with last address
     if [ $lastaddr != $addr ]; then
         # Show current time
         date
