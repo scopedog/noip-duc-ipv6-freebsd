@@ -4,13 +4,13 @@
 # Required programs: curl 
 
 # Set your info here
-interface="YOUR_NIC_INTERFACE" # NIC interface eg em0
+interface="YOUR_INTERFACE" # NIC interface eg em0
 user="YOUR_EMAIL_OR_USERNAME" # E-mail/username
 pass="YOUR_PASSWORD" # Password
 hostname="YOUR_HOSTNAME" # DDNS hostname
 
 # Interval for checking update
-interval="1800" # Specify in seconds
+interval="600" # Specify in seconds
 
 # NO-IP server
 url="https://dynupdate.no-ip.com/nic/update"
@@ -18,41 +18,41 @@ agent="Personal noip-ducv6/freebsd-v1.0"
 
 # Initialize
 lastaddr='none'
-addr=''
 
 # Function for updating
 UpdateIP () {
-    # Show current time
-    date
-
     # Obtain my IP address from interface
     # You have to sometimes repeat it because interface may not be ready yet
-    while [ x$addr = x ] 
+    while :
     do
         # Get valid IPv6 address from NIC
         # Note fe80:: addresses need to be excluded 
         addr=`ifconfig $interface | awk '/inet6/ {if (substr($2, 1, 6) != "fe80::") {print $2; exit;}}'`
         #addr=''
-        echo "$lastaddr -> $addr "
 
         # Check if there's a valid address
         if [ x$addr = x ]; then
             echo "No valid IPv6 address assigned to $interface, will try in 30sec"
             sleep 30
+        else
+            break
         fi
     done
+    #echo "$lastaddr -> $addr "
 
     # Compare with a last address
     if [ $lastaddr != $addr ]; then
-        #echo "Updating to $addr"
+        # Show current time
+        date
+        echo "$lastaddr -> $addr "
 
-        # Send address update message to NO-IP
+        # Send address update message to NO-IP and receive response
         res=$(/usr/local/bin/curl --get --silent --show-error --user-agent "$agent" --user "$user:$pass" -d "hostname=$hostname" -d "myipv6=$addr" $url)
 
         # There seem to be the following three responses
-        #res="good"
-        #res="nochg xxxx"
-        #res="911"
+        # res="good"
+        # res="nochg xxxx"
+        # res="911"
         echo "Response: $res"
 
         # Check response
@@ -74,7 +74,7 @@ UpdateIP () {
         # nochg XXX: No change
         echo $res | grep -q -E "^nochg"
         if [ $? -eq 0 ]; then
-            lastaddr=$addr # $lastaddr may be "none", need to update anyway
+            lastaddr=$addr # $lastaddr may be "none", need to be updated anyway
             echo "Not changed"
             return
         fi
