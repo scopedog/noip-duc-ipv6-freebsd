@@ -6,8 +6,8 @@
 # Add the following lines to /etc/rc.conf.local or /etc/rc.conf
 # to enable this service:
 #
-# noip_enable (bool): Set to NO by default.
-#                     Set it to YES to enable noip.
+# noip_duc_ipv6_enable (bool): Set to NO by default.
+#                              Set it to YES to enable noip.
 #
 
 . /etc/rc.subr
@@ -29,6 +29,6 @@ stop()
 
 load_rc_config $name
 
-: ${noip_enable="NO"}
+: ${noip_duc_ipv6_enable="NO"}
 
 run_rc_command "$1"
