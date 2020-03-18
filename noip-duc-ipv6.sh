@@ -4,13 +4,13 @@
 # Required programs: curl 
 
 # Set your info here
-interface="YOUR_INTERFACE" # NIC interface eg em0
-user="YOUR_EMAIL_OR_USERNAME" # E-mail/username
-pass="YOUR_PASSWORD" # Password
-hostname="YOUR_HOSTNAME" # DDNS hostname
+interface="em0" # NIC interface eg em0
+user="nishida@asusa.net" # E-mail/username
+pass="no-ipahoahoman" # Password
+hostname="rnci003.ddns.net" # DDNS hostname
 
 # Interval for checking update
-interval="600" # Specify in seconds
+interval="1800" # Specify in seconds
 
 # NO-IP server
 url="https://dynupdate.no-ip.com/nic/update"
@@ -18,29 +18,27 @@ agent="Personal noip-ducv6/freebsd-v1.0"
 
 # Initialize
 lastaddr='none'
+addr=''
 
 # Function for updating
 UpdateIP () {
     # Obtain my IP address from interface
     # You have to sometimes repeat it because interface may not be ready yet
-    while :
+    while [ x$addr = x ] 
     do
         # Get valid IPv6 address from NIC
         # Note fe80:: addresses need to be excluded 
         addr=`ifconfig $interface | awk '/inet6/ {if (substr($2, 1, 6) != "fe80::") {print $2; exit;}}'`
         #addr=''
 
-        # Check if there's valid address
+        # Check if there's a valid address
         if [ x$addr = x ]; then
             echo "No valid IPv6 address assigned to $interface, will try in 30sec"
             sleep 30
-        else
-            break
         fi
     done
-    #echo "$lastaddr -> $addr "
 
-    # Compare with last address
+    # Compare with a last address
     if [ $lastaddr != $addr ]; then
         # Show current time
         date
