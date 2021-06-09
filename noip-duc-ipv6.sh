@@ -5,8 +5,8 @@
 
 # Set your info here
 interface="em0" # NIC interface eg em0
-user="nishida@asusa.net" # E-mail/username
-pass="no-ipahoahoman" # Password
+user="myemail-bro" # E-mail/username
+pass="mypass-dude" # Password
 hostname="rnci003.ddns.net" # DDNS hostname
 
 # Interval for checking update
