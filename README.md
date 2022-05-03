@@ -9,4 +9,4 @@ Install 'curl' if not installed yet.
 4. Run # service noip_duc_ipv6 start
 
 Note FreeBSD's dns/noip port does not support IPv6.
-Somebody combine IPv4 and 6 in a script/program.
+Somebody please combine IPv4 and 6.
