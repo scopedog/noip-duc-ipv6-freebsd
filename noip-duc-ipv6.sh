@@ -7,7 +7,7 @@
 interface="em0" # NIC interface eg em0
 user="myemail-bro" # E-mail/username
 pass="mypass-dude" # Password
-hostname="rnci003.ddns.net" # DDNS hostname
+hostname="myhostname-yo" # DDNS hostname eg bsdsv01.ddns.net
 
 # Interval for checking update
 interval="1800" # Specify in seconds
