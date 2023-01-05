@@ -4,7 +4,7 @@
 # Required programs: curl 
 
 # Set your info here
-interface="em0" # NIC interface eg em0
+interface="em0" # NIC interface eg em0, igb0
 user="myemail-bro" # E-mail/username
 pass="mypass-dude" # Password
 hostname="myhostname-yo" # DDNS hostname eg bsdsv01.ddns.net
